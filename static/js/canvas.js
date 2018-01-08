@@ -41,7 +41,7 @@ if (statsOn){
 				},
 				width: window.innerWidth,
 				height: window.innerHeight,
-				velocity: 0.1,
+				velocity: 0.25,
 				length: 100,
 				distance: 120,
 				radius: 150,
@@ -53,9 +53,9 @@ if (statsOn){
 			this.x = Math.random() * canvas.width;
 			this.y = Math.random() * canvas.height;
 
-			this.vx = (config.velocity - (Math.random() * 0.5));
-			this.vy = (config.velocity - (Math.random() * 0.5));
-
+			this.vx = (config.velocity * (Math.random() - 0.5));
+			this.vy = (config.velocity * (Math.random() - 0.5));
+			this.lineLife = 0;
 			this.radius = config.star.randomWidth ? (Math.random() * config.star.width) : config.star.width;
 		}
 
@@ -84,7 +84,6 @@ if (statsOn){
 					star.y += star.vy;
 				}
 			},
-
 			line: function(){
 				var length = config.length,
 					iStar,
@@ -93,7 +92,9 @@ if (statsOn){
 					j;
 
 				for (i = 0; i < length; i++) {
+					
 					for (j = 0; j < length; j++) {
+						
 						iStar = config.stars[i];
 						jStar = config.stars[j];
 
@@ -109,14 +110,21 @@ if (statsOn){
 								(iStar.x - config.position.x) > - config.radius &&
 								(iStar.y - config.position.y) > - config.radius
 							) {
+								config.stars[i].lineLife = Math.min(0.5, config.stars[i].lineLife + .003);
+							} else {
+								config.stars[i].lineLife = Math.max(0, config.stars[i].lineLife - .003);
+						
+							}
+
+
 								context.beginPath();
 								context.moveTo(iStar.x, iStar.y);
 								context.lineTo(jStar.x, jStar.y);
-								context.strokeStyle = getColor(iStar.x, iStar.y, jStar.x, jStar.y);
+								context.strokeStyle = getColor(iStar,jStar);
 								// getRandomColor(); // color cycle based on global x,y, HSV cycle over time
 								context.stroke();
 								context.closePath();
-							}
+					
 						}
 					}
 				}
@@ -233,15 +241,16 @@ $('canvas').constellation({
 });
 
 var offset = 0;
-var iterOffsetIncrement = .00001;
+var iterOffsetIncrement = .000004; // a higher value makes more rainbows faster
 var xyDiff = 0.5;
-var strength = 0.5; // how many rainbows across whole screen?
 var w = $('canvas').width();
 var h = $('canvas').height();
-function getColor(x1, y1, x2, y2){
+function getColor(iStar, jStar){
+//	console.log('ll:'+iStar.lineLife);
 	offset += iterOffsetIncrement;
-	x = (x1+x2)/2;
-	y = (y1+y2)/2;
+	offset %= 255;
+	x = (iStar.x+jStar.x)/2;
+	y = (iStar.y+jStar.y)/2;
 	
 	xC = x / w; // 0 to 1
 	yC = y / h; // 0 to 1
@@ -250,9 +259,11 @@ function getColor(x1, y1, x2, y2){
 	yH = yC * 255; // 0 to 255
 
 	// Apply (a shifting) offset to x and y
-	hue = parseInt(((xH * offset) + (yH * offset * xyDiff)) % 1000);
+	hue = parseInt(((xH + offset) + (yH + offset * xyDiff)) % 1000);
+
+	ll = parseInt((iStar.lineLife) * 100) + "%";
 //	console.log("hue:"+hue);	
-	return "hsl("+hue+",50%,50%)";
+	return "hsl("+hue+",50%,"+ll+")";
 	
 
 	// rainbow across entire screen...
@@ -260,11 +271,4 @@ function getColor(x1, y1, x2, y2){
 		
 }
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+
