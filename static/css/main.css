@@ -31,6 +31,18 @@
 #navbar .buttons ul li {
 	display:inline-block;
 }
+#navbar .buttons ul li a:hover {
+	cursor:pointer;
+}
+#navbar .buttons ul li .bottomContainer {
+	width:calc(100% - 25px);
+	margin: 0 auto;
+}
+#navbar .buttons ul li .bottomContainer .bottom {
+	height:3px;
+	background-color:white;
+	width:0%;
+}
 
 #navbar .buttons ul li a, #navbar .buttons ul li a:visited { 
 	color:white;	
@@ -45,7 +57,6 @@
 
 
 #top {
-	background-image:url('../img/background.png');
 	background-size:cover;
 	background-position:center;
 	height:800px;
@@ -64,6 +75,21 @@
 	font-weight:bold;
 	color:white;
 	background-blend-mode: multiply;
+   background: -webkit-linear-gradient(left, red , yellow);
+   background: -o-linear-gradient(right, red, yellow);
+   background: -moz-linear-gradient(right, red, yellow);
+   background: linear-gradient(to right, red , yellow); 
+background: #fc79dd; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #fc79dd 0%, #ff7a7c 46%, #ff9451 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #fc79dd 0%,#ff7a7c 46%,#ff9451 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #fc79dd 0%,#ff7a7c 46%,#ff9451 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc79dd', endColorstr='#ff9451',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+	padding-bottom:20px;
 }
 @media only screen and (max-width: 960px) { #top .hellotext {		font-size:40px;	}}
 @media only screen and (max-width: 768px) { #top .hellotext {		font-size:35px;	}}
@@ -86,18 +112,30 @@ body {
 	background-color:black;
 	left:0;
 	margin:0;
-
+	
 }
 
+#bodyContainer {
+	position:relative;
+	top:80vh;
+	width:100%;
+	background-color:black;
+	
+}
 #middle {
 	left:0;
 	background-color:black;
 	padding: 100px 90px;
 	color:white;	
-	top:80vh;
 	position:relative;
-	padding-bottom:80vh;
+	width:860px;
+	margin: 0 auto;
 }
+
+@media only screen and (max-width: 960px) {  #middle { width: 640px; } }
+@media only screen and (max-width: 768px) {  #middle { width: 440px; } }
+@media only screen and (max-width: 600px) {  #middle { width: 350px; } }
+
 
 
 
@@ -131,6 +169,57 @@ body {
 	font-weight:100;
 }
 
+#cards {
+	margin-top:30px;
+}
+
+#whatWeDo .card {
+	font-family:'Montserrat';
+	width: 280px;
+	height: 220px;
+	display:inline-block;
+	position:relative;
+}
+
+#whatWeDo .card .pic {
+	width:30px;
+	height:40px;
+	position:absolute; top:15px; left:15px;
+	background-size:100%;
+	background-repeat:no-repeat;
+	background-position:center;
+
+}
+#cards .card:nth-child(1) .pic {
+	background-image:url('../img/knight.svg');
+}
+#cards .card:nth-child(2) .pic {
+	background-image:url('../img/light.svg');
+	width:41px;
+	left:14px;
+}
+#cards .card:nth-child(3) .pic {
+	background-image:url('../img/megaphone.svg');
+	width:41px;
+	left:14px;
+}
+
+#whatWeDo .card .title {
+	font-weight:bold;
+	position:absolute; top:10px; left:80px;
+	font-size:18px;
+}
+#whatWeDo .card .description {
+	position:absolute; top:45px; left:80px;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight:100;
+
+}
+
+@media only screen and (max-width: 768px) { #cards .card .title { top:65px; left:15px; } }
+@media only screen and (max-width: 768px) { #cards .card .description { top:95px; left:15px; } }
+
+
 
 @media only screen and (max-width: 768px) {
 	body .top {
@@ -138,3 +227,60 @@ body {
 
 }
 
+.purple {
+	background-color:#9013FE;
+}
+
+.person {
+	width:220px;
+	margin: 0 5px;
+	height:300px;
+	color:white;
+	display:inline-block;
+	text-align:left;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+.person .picture {
+	width:220px;
+	height:220px;
+	background-size:100%;
+	background-repeat:no-repeat;
+
+}
+
+.person .name {
+	font-weight:bold;
+	
+}
+
+.person .description {
+	font-weight:100;
+}
+
+.talkButton {
+	width: calc(100% - 40px);
+	height:80px;
+	line-height:80px;
+	color:white;
+	font-size:33px;
+	text-align:center;
+	font-family:'Montserrat', 'sans-serif';
+}
+
+.talkButton a, .talkButton a:hover, .talkButton a:visited{ 
+	color:white;
+	text-decoration:none;
+}
+
+.videos {
+	text-align:center;
+	padding-top:20px;
+}
+
+#persons {
+	text-align:center;
+}
+
+canvas {
+	position:fixed;
+}
