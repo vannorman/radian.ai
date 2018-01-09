@@ -33,7 +33,7 @@ if (statsOn){
 				},
 				line: {
 					color: 'rgba(255, 255, 255, .5)',
-					width: 0.2
+					width: 0.3
 				},
 				position: {
 					x: 0,
@@ -99,6 +99,7 @@ if (statsOn){
 						jStar = config.stars[j];
 						starDist = Math.abs(iStar.x-jStar.x) + Math.abs(iStar.y-jStar.y);
 						brightness = (200 - starDist)/120;
+						if (brightness > .5) brightness = Math.min(1,brightness+0.25);
 //						starDist = Math.sqrt(Math.pow(Math.abs(iStar.x-jStar.x),2) + Math.pow(Math.abs(iStar.y-jStar.y)));
 						// at distances between 0 and config distance, brightness is 1
 						// at config * 1.5 dist brightness is zero
@@ -246,7 +247,7 @@ $('canvas').constellation({
 });
 
 var offset = 0;
-var iterOffsetIncrement = .000004; // a higher value makes more rainbows faster
+var iterOffsetIncrement = .0008; // a higher value makes more rainbows faster
 var xyDiff = 0.5;
 var w = $('canvas').width();
 var h = $('canvas').height();
