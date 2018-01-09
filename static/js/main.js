@@ -7,7 +7,7 @@ $(document).ready(function(){
 });
 
 function Update(){
-	var growSpeed = 3;
+	var growSpeed = 6;
 	setTimeout(function(){Update();},10);
 	$('.underlineShrink').each(function(){
 		$(this).css('float','right');

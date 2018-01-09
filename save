@@ -16,6 +16,13 @@ if (statsOn){
  * @author Acauã Montiel <contato@acauamontiel.com.br>
  * @license http://acaua.mit-license.org/
  */
+
+lines = [];
+length = 100;
+for (i=0;i<length*length;i++){
+	lines.push(0);
+}
+
 (function ($, window) {
 	var $window = $(window);
 	/**
@@ -56,6 +63,7 @@ if (statsOn){
 			this.vx = (config.velocity * (Math.random() - 0.5));
 			this.vy = (config.velocity * (Math.random() - 0.5));
 			this.lineLife = 0;
+			this.connectedStars = [];
 			this.radius = config.star.randomWidth ? (Math.random() * config.star.width) : config.star.width;
 		}
 
@@ -92,21 +100,17 @@ if (statsOn){
 					j;
 
 				for (i = 0; i < length; i++) {
-					
+					console.log('i: '+i);					
 					for (j = 0; j < length; j++) {
-						
+						n = i * length + j;
 						iStar = config.stars[i];
 						jStar = config.stars[j];
-						starDist = Math.abs(iStar.x-jStar.x) + Math.abs(iStar.y-jStar.y);
-						brightness = (200 - starDist)/120;
-//						starDist = Math.sqrt(Math.pow(Math.abs(iStar.x-jStar.x),2) + Math.pow(Math.abs(iStar.y-jStar.y)));
-						// at distances between 0 and config distance, brightness is 1
-						// at config * 1.5 dist brightness is zero
-						if (	true
-//							(iStar.x - jStar.x) < config.distance &&
-//							(iStar.y - jStar.y) < config.distance &&
-//							(iStar.x - jStar.x) > - config.distance &&
-//							(iStar.y - jStar.y) > - config.distance
+
+						if (
+							(iStar.x - jStar.x) < config.distance &&
+							(iStar.y - jStar.y) < config.distance &&
+							(iStar.x - jStar.x) > - config.distance &&
+							(iStar.y - jStar.y) > - config.distance
 						) {
 							if (
 								(iStar.x - config.position.x) < config.radius &&
@@ -114,24 +118,42 @@ if (statsOn){
 								(iStar.x - config.position.x) > - config.radius &&
 								(iStar.y - config.position.y) > - config.radius
 							) {
-								config.stars[i].lineLife = Math.min(0.5, config.stars[i].lineLife + .0003);
+								lines[n] = Math.min(0.5, lines[n] + .001);
+								console.log('liens n: '+n);
+																
+//								jStar.lineLife = Math.min(0.5, jStar.lineLife + .001);
 							} else {
-								config.stars[i].lineLife = Math.max(0, config.stars[i].lineLife - .00005);
+//								console.log('NO liens n: '+n);
+								lines[n] = Math.max(0, lines[n] - .001);
+//								jStar.lineLife = Math.max(0, jStar.lineLife - .01);
+//								iStar.lineLife = Math.max(0, iStar.lineLife - .01);
 						
 							}
 
-							if (brightness > .1 && (iStar.lineLife > .01 || jStar.lineLife > .01)) {
-								context.beginPath();
-								context.moveTo(iStar.x, iStar.y);
-								context.lineTo(jStar.x, jStar.y);
-								context.strokeStyle = getColor(iStar,jStar,brightness);
-								// getRandomColor(); // color cycle based on global x,y, HSV cycle over time
-								context.stroke();
-								context.closePath();
-							}
-					
+				
 						}
 					}
+			for (i=0;i<lines.length;i++){
+				// if val is nonzero
+				if (lines[i] > .01){
+					// extract x and y from the index
+					x = Math.round(i / config.stars.length);
+					y = i % config.stars.length;
+					console.log('x,y:'+x+','+y);
+					iStar = config.stars[x];
+					jStar = config.stars[y];
+					context.beginPath();
+					context.moveTo(iStar.x, iStar.y);
+					context.lineTo(jStar.x, jStar.y);
+					context.strokeStyle = getColor(iStar,jStar);
+					// getRandomColor(); // color cycle based on global x,y, HSV cycle over time
+					context.stroke();
+					context.closePath();
+	
+					
+				}
+			}
+
 				}
 			}
 		};
@@ -242,7 +264,7 @@ $('canvas').constellation({
 		color: 'rgba(255, 255, 255, .5)'
 	},
 	length: (window.innerWidth / 6),
-	radius: (window.innerWidth / 6)
+	radius: (window.innerWidth / 5)
 });
 
 var offset = 0;
@@ -250,7 +272,7 @@ var iterOffsetIncrement = .000004; // a higher value makes more rainbows faster
 var xyDiff = 0.5;
 var w = $('canvas').width();
 var h = $('canvas').height();
-function getColor(iStar, jStar,brightness){
+function getColor(iStar, jStar){
 //	console.log('ll:'+iStar.lineLife);
 	offset += iterOffsetIncrement;
 	offset %= 255;
@@ -266,7 +288,8 @@ function getColor(iStar, jStar,brightness){
 	// Apply (a shifting) offset to x and y
 	hue = parseInt(((xH + offset) + (yH + offset * xyDiff)) % 1000);
 
-	ll = parseInt((iStar.lineLife) * 100 * brightness) + "%";
+	ll = parseInt((iStar.lineLife) * 100) + "%";
+	ll = "50%";
 //	console.log("hue:"+hue);	
 	return "hsl("+hue+",50%,"+ll+")";
 	
@@ -275,5 +298,6 @@ function getColor(iStar, jStar,brightness){
 //	console.log("x,y: "+x+", "+y+", cavn:"+$('canvas').width());
 		
 }
+
 
 

@@ -7,7 +7,7 @@
 	position:fixed;
 	top:30px;
 	width:100%;
-	
+	z-index:00;	
 }
 
 #navbar .logo {
@@ -20,7 +20,6 @@
 
 #navbar .buttons {
 	padding-right:80px;
-	width:400px;
 	float:right;
 }
 
@@ -69,7 +68,8 @@
 }
 
 #top .hellotext {
-	margin: 200px 10px 0 100px;
+	margin: 260px auto;
+	width:80%;
 	font-family: 'Montserrat', sans-serif;	
 	font-size:45px;
 	font-weight:bold;
@@ -117,14 +117,18 @@ body {
 
 #bodyContainer {
 	position:relative;
-	top:80vh;
+	top:100vh;
 	width:100%;
 	background-color:black;
 	
 }
+#middleContainer {
+	width:100%;
+	background-color:black;
+	z-index:101;
+}
 #middle {
 	left:0;
-	background-color:black;
 	padding: 100px 90px;
 	color:white;	
 	position:relative;
@@ -232,7 +236,7 @@ body {
 }
 
 .person {
-	width:220px;
+	width:240px;
 	margin: 0 5px;
 	height:300px;
 	color:white;
@@ -245,15 +249,26 @@ body {
 	height:220px;
 	background-size:100%;
 	background-repeat:no-repeat;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+	transition: all .3s;
+}
+.person .picture:hover {
+    -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
 
 }
 
 .person .name {
 	font-weight:bold;
+	padding-top:8px;
 	
 }
 
 .person .description {
+	padding-top:8px;
+	height:80px;
+	overflow:hidden;
 	font-weight:100;
 }
 
@@ -265,12 +280,21 @@ body {
 	font-size:33px;
 	text-align:center;
 	font-family:'Montserrat', 'sans-serif';
+	transition: .1s all;
 }
 
 .talkButton a, .talkButton a:hover, .talkButton a:visited{ 
 	color:white;
 	text-decoration:none;
+	
 }
+
+.talkButton:hover {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+
+}
+
 
 .videos {
 	text-align:center;
@@ -283,4 +307,6 @@ body {
 
 canvas {
 	position:fixed;
+	height:100%;
+	z-index:-105;
 }

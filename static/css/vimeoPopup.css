@@ -34,14 +34,14 @@
     background-image:url('../img/play_orig.png');
     background-size:cover;
     background-repeat:no-repeat;
-    width:130px; height: 130px;
+    width:90px; height: 90px;
     position:absolute;
-    top:calc(50% - 65px);
-    left:calc(50% - 65px);
+    top:calc(50% - 45px);
+    left:calc(50% - 45px);
 }
 .vimeoVid {
-	width: 360px;
-	height:360px;
+	width: 240px;
+	height:240px;
 	position:relative;	
 	display:inline-block;
 	margin:0 auto;
@@ -51,6 +51,7 @@
 
 .vimeoVid .img {
 	background-repeat:no-repeat;
+	background-size:cover;
 	width:100%;
 	height:100%;
 }
@@ -84,9 +85,11 @@
 	text-align:center;
 	line-height:80px;
 	font-size:50px;
+	transition: .15s all;
 }
 
 #x:hover {
 	cursor:pointer;
+	background-color:gray;
 }
 
